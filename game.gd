@@ -47,7 +47,7 @@ func score_state():
 	computer.process_mode = Node.PROCESS_MODE_DISABLED
 	player1ScoreLabel.text = str(player1Score)
 	computerScoreLabel.text = str(computerScore)
-	if(player1Score == 10 || computerScore == 10):
+	if(player1Score == 3 || computerScore == 3):
 		state = State.GameOver
 	else:
 		state = State.Ready
