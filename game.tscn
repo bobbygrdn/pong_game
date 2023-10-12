@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://d1qwkdbyvrb25"]
+
+[ext_resource type="PackedScene" uid="uid://b5tyq00tmwyrv" path="res://paddle.tscn" id="1_8nt48"]
+[ext_resource type="Script" path="res://game.gd" id="1_vktlj"]
+[ext_resource type="PackedScene" uid="uid://d01ngvm2ms4g6" path="res://bumper.tscn" id="2_gr4fe"]
+[ext_resource type="PackedScene" uid="uid://dk8wi8b4xt0um" path="res://ball.tscn" id="2_jlh3s"]
+[ext_resource type="PackedScene" uid="uid://egey7ibepq6i" path="res://score.tscn" id="3_hkdj2"]
+[ext_resource type="FontFile" uid="uid://kg6b8g81y3kp" path="res://Assets/font.ttf" id="3_lfo14"]
+[ext_resource type="Script" path="res://computer.gd" id="5_xxna8"]
+[ext_resource type="PackedScene" uid="uid://cu0hvumvsafo7" path="res://scoreArea.tscn" id="6_caogu"]
+[ext_resource type="AudioStream" uid="uid://bnabw8wwg2ys2" path="res://Assets/score.wav" id="9_2i71g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_x8rvh"]
+font_size = 40
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_vktlj")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.0885599, 0.0885599, 0.0885599, 1)
+
+[node name="Player1ScoreLabel" parent="." instance=ExtResource("3_hkdj2")]
+offset_left = 322.0
+offset_top = 180.0
+offset_right = 372.0
+offset_bottom = 263.0
+
+[node name="ComputerScoreLabel" parent="." instance=ExtResource("3_hkdj2")]
+offset_left = 960.0
+offset_top = 180.0
+offset_right = 1010.0
+offset_bottom = 263.0
+
+[node name="GameResponse" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 640.0
+offset_top = 70.0
+offset_right = 665.0
+offset_bottom = 113.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_lfo14")
+label_settings = SubResource("LabelSettings_x8rvh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TopBumper" parent="." groups=["wall"] instance=ExtResource("2_gr4fe")]
+position = Vector2(0, -10)
+
+[node name="BottomBumper" parent="." groups=["wall"] instance=ExtResource("2_gr4fe")]
+position = Vector2(0, 720)
+
+[node name="Player1" parent="." groups=["players"] instance=ExtResource("1_8nt48")]
+position = Vector2(30, 90)
+
+[node name="Computer" parent="." groups=["players"] instance=ExtResource("1_8nt48")]
+position = Vector2(1250, 630)
+script = ExtResource("5_xxna8")
+
+[node name="Ball" parent="." instance=ExtResource("2_jlh3s")]
+position = Vector2(640, 360)
+
+[node name="computerScoreArea" parent="." groups=["computerScoreArea"] instance=ExtResource("6_caogu")]
+position = Vector2(-26, 360)
+
+[node name="playerScoreArea" parent="." groups=["playerScoreArea"] instance=ExtResource("6_caogu")]
+position = Vector2(1306, 360)
+
+[node name="ScoreEffectPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_2i71g")
+
+[connection signal="computerScored" from="Ball" to="." method="_on_ball_computer_scored"]
+[connection signal="playerScored" from="Ball" to="." method="_on_ball_player_scored"]
+[connection signal="score" from="computerScoreArea" to="." method="_on_computer_score_area_score"]
+[connection signal="score" from="playerScoreArea" to="." method="_on_player_score_area_score"]

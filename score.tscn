@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://egey7ibepq6i"]
+
+[ext_resource type="FontFile" uid="uid://kg6b8g81y3kp" path="res://Assets/font.ttf" id="1_tkdl6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lvfny"]
+font_size = 120
+
+[node name="Score" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_tkdl6")
+text = "0"
+label_settings = SubResource("LabelSettings_lvfny")
+horizontal_alignment = 1
+vertical_alignment = 1
